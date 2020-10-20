@@ -102,15 +102,15 @@
 // on separate pin, but homed in one cycle. Also, it should be noted that the function of hard limits
 // will not be affected by pin sharing.
 // NOTE: Defaults are set for a traditional 3-axis CNC machine. Z-axis first to clear, followed by X & Y.
-#define HOMING_CYCLE_0 (1<<Z_AXIS)                // REQUIRED: First move Z to clear workspace.
-#define HOMING_CYCLE_1 ((1<<X_AXIS)|(1<<Y_AXIS))  // OPTIONAL: Then move X,Y at the same time.
+// #define HOMING_CYCLE_0 (1<<Z_AXIS)                // REQUIRED: First move Z to clear workspace.
+// #define HOMING_CYCLE_1 ((1<<X_AXIS)|(1<<Y_AXIS))  // OPTIONAL: Then move X,Y at the same time.
 // #define HOMING_CYCLE_2                         // OPTIONAL: Uncomment and add axes mask to enable
 
 // NOTE: The following are two examples to setup homing for 2-axis machines.
 // #define HOMING_CYCLE_0 ((1<<X_AXIS)|(1<<Y_AXIS))  // NOT COMPATIBLE WITH COREXY: Homes both X-Y in one cycle. 
 
-// #define HOMING_CYCLE_0 (1<<X_AXIS)  // COREXY COMPATIBLE: First home X
-// #define HOMING_CYCLE_1 (1<<Y_AXIS)  // COREXY COMPATIBLE: Then home Y
+#define HOMING_CYCLE_1 (1<<Y_AXIS)  // COREXY COMPATIBLE: Then home Y
+#define HOMING_CYCLE_0 (1<<X_AXIS)  // COREXY COMPATIBLE: First home X
 
 // Number of homing cycles performed after when the machine initially jogs to limit switches.
 // This help in preventing overshoot and should improve repeatability. This value should be one or
@@ -121,7 +121,7 @@
 // cycle is still invoked by the $H command. This is disabled by default. It's here only to address
 // users that need to switch between a two-axis and three-axis machine. This is actually very rare.
 // If you have a two-axis machine, DON'T USE THIS. Instead, just alter the homing cycle for two-axes.
-// #define HOMING_SINGLE_AXIS_COMMANDS // Default disabled. Uncomment to enable.
+#define HOMING_SINGLE_AXIS_COMMANDS // Default disabled. Uncomment to enable.
 
 // After homing, Grbl will set by default the entire machine space into negative space, as is typical
 // for professional CNC machines, regardless of where the limit switches are located. Uncomment this
@@ -186,7 +186,7 @@
 // defined at (http://corexy.com/theory.html). Motors are assumed to positioned and wired exactly as
 // described, if not, motions may move in strange directions. Grbl requires the CoreXY A and B motors
 // have the same steps per mm internally.
-// #define COREXY // Default disabled. Uncomment to enable.
+#define COREXY // Default disabled. Uncomment to enable.
 
 // Inverts pin logic of the control command pins based on a mask. This essentially means you can use
 // normally-closed switches on the specified pins, rather than the default normally-open switches.
@@ -221,7 +221,7 @@
 // Grbl doesn't know its position and to force the user to home before proceeding. This option forces
 // Grbl to always initialize into an ALARM state regardless of homing or not. This option is more for
 // OEMs and LinuxCNC users that would like this power-cycle behavior.
-// #define FORCE_INITIALIZATION_ALARM // Default disabled. Uncomment to enable.
+#define FORCE_INITIALIZATION_ALARM // Default disabled. Uncomment to enable.
 
 // At power-up or a reset, Grbl will check the limit switch states to ensure they are not active
 // before initialization. If it detects a problem and the hard limits setting is enabled, Grbl will
@@ -598,11 +598,11 @@
 // is enabled. Make sure the constant values are exactly the same as the script solution.
 // NOTE: When N_PIECES < 4, unused RPM_LINE and RPM_POINT defines are not required and omitted.
 #define N_PIECES 4  // Integer (1-4). Number of piecewise lines used in script solution.
-#define RPM_MAX  11686.4  // Max RPM of model. $30 > RPM_MAX will be limited to RPM_MAX.
-#define RPM_MIN  202.5    // Min RPM of model. $31 < RPM_MIN will be limited to RPM_MIN.
-#define RPM_POINT12  6145.4  // Used N_PIECES >=2. Junction point between lines 1 and 2.
-#define RPM_POINT23  9627.8  // Used N_PIECES >=3. Junction point between lines 2 and 3.
-#define RPM_POINT34  10813.9 // Used N_PIECES = 4. Junction point between lines 3 and 4.
+#define RPM_MAX  1000  // Max RPM of model. $30 > RPM_MAX will be limited to RPM_MAX.
+#define RPM_MIN  0    // Min RPM of model. $31 < RPM_MIN will be limited to RPM_MIN.
+#define RPM_POINT12  250  // Used N_PIECES >=2. Junction point between lines 1 and 2.
+#define RPM_POINT23  500  // Used N_PIECES >=3. Junction point between lines 2 and 3.
+#define RPM_POINT34  1000 // Used N_PIECES = 4. Junction point between lines 3 and 4.
 #define RPM_LINE_A1  3.197101e-03  // Used N_PIECES >=1. A and B constants of line 1.
 #define RPM_LINE_B1  -3.526076e-1
 #define RPM_LINE_A2  1.722950e-2   // Used N_PIECES >=2. A and B constants of line 2.
@@ -641,7 +641,7 @@
 // #define ENABLE_DUAL_AXIS	// Default disabled. Uncomment to enable.
 
 // Select the one axis to mirror another motor. Only X and Y axis is supported at this time.
-#define DUAL_AXIS_SELECT  X_AXIS  // Must be either X_AXIS or Y_AXIS
+//#define DUAL_AXIS_SELECT  X_AXIS  // Must be either X_AXIS or Y_AXIS
 
 // To prevent the homing cycle from racking the dual axis, when one limit triggers before the
 // other due to switch failure or noise, the homing cycle will automatically abort if the second 

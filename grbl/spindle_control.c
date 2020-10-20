@@ -119,11 +119,10 @@ void spindle_stop()
   #endif
   if (!(settings.flags & BITFLAG_LASER_MODE)) {                                                         // RC Servo
   #ifdef RC_SERVO_SHORT                                                                                 // RC Servo
-    SPINDLE_TCCRA_REGISTER |= (1<<SPINDLE_COMB_BIT); // Ensure PWM output is enabled.                   // RC Servo
     #ifdef RC_SERVO_INVERT                                                                              // RC Servo
-      SPINDLE_OCR_REGISTER = RC_SERVO_LONG;                                                             // RC Servo
+      spindle_set_speed(RC_SERVO_LONG);                                                                 // RC Servo
     #else                                                                                               // RC Servo
-      SPINDLE_OCR_REGISTER = RC_SERVO_SHORT;                                                            // RC Servo
+      spindle_set_speed(RC_SERVO_SHORT);                                                                // RC Servo
     #endif                                                                                              // RC Servo
   #endif                                                                                                // RC Servo
   }                                                                                                     // RC Servo
